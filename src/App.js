@@ -14,6 +14,16 @@ const todoData = [
     task: 'Bake Cookies',
     id: 1528817084358,
     completed: false
+  },
+  {
+    task: 'Wash Dogs',
+    id: 1528817098324,
+    completed: false
+  },
+  {
+    task: 'Clean Yard',
+    id: 1528817125310,
+    completed: false
   }
 ];
 
@@ -26,42 +36,50 @@ class App extends React.Component {
     };
   }
 
-  toggleCompleted = (clickedTaskId) => {
+  toggleCompleted = (clickedItemId) => {
     this.setState({
-      todo: this.state.todo.map((task) => {
-        if (task.id === clickedTaskId) {
+      todo: this.state.todo.map((item) => {
+        if (item.id === clickedItemId) {
           return {
-            ...task,
-            completed: !task.completed
+            ...item,
+            completed: !item.completed
           };
         } else {
-          return task;
+          return item;
         }
       })
     });
   };
 
-  addTask = (taskTask) => {
-    const newTask = {
-      task: taskTask,
+  addItem = (itemName) => {
+    const newItem = {
+      task: itemName,
       id: new Date(),
       completed: false
     };
     this.setState({
-      todo: [...this.state.todo, newTask]
+      todo: [...this.state.todo, newItem]
+    });
+  };
+
+  clearCompleted = () => {
+    const newTodo = this.state.todo.filter((item) => !item.completed);
+    this.setState({
+      todo: newTodo
     });
   };
 
   render() {
     return (
-      <div classTask="App">
-        <div classTask="header">
+      <div className="App">
+        <div className="header">
           <h1>Todo List</h1>
-          <TodoForm addTask={this.addTask} />
+          <TodoForm addItem={this.addItem} />
         </div>
         <TodoList
           todo={this.state.todo}
           toggleCompleted={this.toggleCompleted}
+          clearCompleted={this.clearCompleted}
         />
       </div>
     );
